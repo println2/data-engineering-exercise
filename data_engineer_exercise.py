@@ -41,8 +41,8 @@ def jsonresponse(url):
 def get_clp_places(url):
     data = jsonresponse(url)
     data = pd.DataFrame([flatten_json(x) for x in data])
-    data[data['address_cityName'].str.lower().str.contains('antwerpen') == True]['antwerpen'] = 1
-    data[data['address_cityName'].str.lower().str.contains('antwerpen') == False]['antwerpen'] = 0
+    data.loc[data['address_cityName'].str.lower().str.contains('antwerpen') == True,'antwerpen'] = 1
+    data.loc[data['address_cityName'].str.lower().str.contains('antwerpen') == False,'antwerpen'] = 0
     return data
 
 df_clp = get_clp_places("https://ecgplacesmw.colruytgroup.com/ecgplacesmw/v3/nl/places/filter/clp-places")
